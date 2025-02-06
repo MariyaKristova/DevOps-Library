@@ -28,7 +28,7 @@ jobs:
       run: npm audit
 
   build_test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04  # Changed to Ubuntu 22.04 to ensure compatibility with missing packages
 
     steps:
     - name: Clone the repo on the machine
@@ -50,11 +50,10 @@ jobs:
           libxdamage1 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 libgbm1 libglib2.0-0 \
           libnspr4 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdbus-1-3 libgdk-pixbuf2.0-0 libgtk-3-0 \
           libpango-1.0-0 libwayland-client0 libwayland-egl1 libwayland-server0 libxkbcommon0 \
-          libffi-dev libicu-dev libx264-dev
-    - name: Test Playwright Browsers Installation
-      run: npx playwright install --with-deps
+          libffi-dev libicu-dev libx264-164
 
-
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps --force
 
   deploy:
     runs-on: ubuntu-latest
@@ -67,4 +66,3 @@ jobs:
           service_id: ${{ secrets.MY_RENDER_SERVICE_KEY }}
           api_key: ${{ secrets.MY_RENDER_API_KEY }}
           wait_deploy: true
-
